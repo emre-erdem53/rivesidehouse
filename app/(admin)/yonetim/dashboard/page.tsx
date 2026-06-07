@@ -75,10 +75,10 @@ export default async function DashboardPage() {
             Riverside Tiny House bugün oldukça sakin ve huzurlu.
           </p>
         </div>
-        {!stats.available && (
+        {(!stats.available || stats.demoMode) && (
           <span className="flex items-center gap-xs text-secondary font-label-sm bg-secondary-container/40 px-sm py-xs rounded-full">
             <Icon name="info" className="text-[18px]" />
-            Demo veri (veritabanı bağlı değil)
+            {stats.demoMode ? "Sunum modu — demo veriler" : "Demo veri (veritabanı bağlı değil)"}
           </span>
         )}
       </header>

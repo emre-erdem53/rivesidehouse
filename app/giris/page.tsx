@@ -32,8 +32,9 @@ export default function LoginPage() {
             Hoş Geldiniz
           </h2>
           <LoginForm />
-          <p className="mt-md text-center font-body-md text-body-md text-on-surface-variant/70 text-sm">
-            Demo: admin@riversidetinyhouse.com / riverside123
+          <p className="mt-md text-center font-body-md text-body-md text-on-surface-variant/70 text-sm space-y-xs">
+            <span className="block">Yönetici: admin@riversidetinyhouse.com / riverside123</span>
+            <span className="block">Resepsiyon: resepsiyon@riversidetinyhouse.com / riverside123</span>
           </p>
         </div>
 

@@ -1,5 +1,13 @@
 import { prisma } from "@/lib/db";
 import { rooms as staticRooms } from "@/lib/content";
+import {
+  isAdminDemoMode,
+  mockDashboardStats,
+  mockInventory,
+  mockReservations,
+  mockStaff,
+  mockSyncLogs,
+} from "./mock";
 
 export type ReservationRow = {
   id: string;
@@ -24,9 +32,11 @@ export type InventoryRow = {
 };
 
 /**
- * Veritabanı erişilemiyorsa boş/fallback değerler döner; panel her durumda render olur.
+ * Veritabanı erişilemiyorsa veya ADMIN_DEMO_MODE=true ise zengin demo veriler döner.
  */
 export async function getDashboardStats() {
+  if (isAdminDemoMode()) return mockDashboardStats;
+
   try {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -70,27 +80,23 @@ export async function getDashboardStats() {
       roomCount,
       occupiedToday,
       available: true,
+      demoMode: false,
     };
   } catch {
-    return {
-      todayCheckIns: 0,
-      occupancy: 0,
-      monthlyRevenue: 0,
-      pending: 0,
-      roomCount: staticRooms.length,
-      occupiedToday: 0,
-      available: false,
-    };
+    return mockDashboardStats;
   }
 }
 
 export async function getReservations(): Promise<ReservationRow[]> {
+  if (isAdminDemoMode()) return mockReservations;
+
   try {
     const rows = await prisma.reservation.findMany({
       orderBy: { createdAt: "desc" },
       include: { guest: true, roomType: true },
       take: 100,
     });
+    if (rows.length === 0) return mockReservations;
     return rows.map((r) => ({
       id: r.id,
       code: r.code,
@@ -103,11 +109,13 @@ export async function getReservations(): Promise<ReservationRow[]> {
       totalAmount: Number(r.totalAmount),
     }));
   } catch {
-    return [];
+    return mockReservations;
   }
 }
 
 export async function getInventory(): Promise<InventoryRow[]> {
+  if (isAdminDemoMode()) return mockInventory;
+
   try {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -128,35 +136,35 @@ export async function getInventory(): Promise<InventoryRow[]> {
       isActive: r.isActive,
     }));
   } catch {
-    return staticRooms.map((r) => ({
-      id: r.invCode,
-      invCode: r.invCode,
-      name: r.name,
-      basePrice: r.basePrice,
-      capacity: r.capacity,
-      todayAvailability: 3,
-      isActive: true,
-    }));
+    return mockInventory;
   }
 }
 
 export async function getStaff() {
+  if (isAdminDemoMode()) return mockStaff;
+
   try {
-    return await prisma.staffMember.findMany({
+    const rows = await prisma.staffMember.findMany({
       orderBy: { createdAt: "asc" },
     });
+    if (rows.length === 0) return mockStaff;
+    return rows;
   } catch {
-    return [];
+    return mockStaff;
   }
 }
 
 export async function getSyncLogs() {
+  if (isAdminDemoMode()) return mockSyncLogs;
+
   try {
-    return await prisma.syncLog.findMany({
+    const rows = await prisma.syncLog.findMany({
       orderBy: { createdAt: "desc" },
       take: 10,
     });
+    if (rows.length === 0) return mockSyncLogs;
+    return rows;
   } catch {
-    return [];
+    return mockSyncLogs;
   }
 }

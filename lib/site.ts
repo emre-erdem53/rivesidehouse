@@ -35,6 +35,7 @@ export const adminNav: {
 }[] = [
   { label: "Panel", href: "/yonetim/dashboard", icon: "dashboard" },
   { label: "Rezervasyonlar", href: "/yonetim/rezervasyonlar", icon: "calendar_month" },
+  { label: "Muhasebe", href: "/yonetim/muhasebe", icon: "payments" },
   { label: "Envanter", href: "/yonetim/envanter", icon: "bed" },
   { label: "Personel", href: "/yonetim/personel", icon: "group" },
   { label: "Ayarlar", href: "/yonetim/ayarlar", icon: "settings" },
