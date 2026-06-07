@@ -41,7 +41,9 @@ Site: http://localhost:3000 · Yönetim paneli: http://localhost:3000/yonetim
 | Değişken | Açıklama |
 | --- | --- |
 | `DATABASE_URL` | PostgreSQL bağlantı adresi |
-| `AUTH_SECRET` | Auth.js gizli anahtarı (`openssl rand -base64 32`) |
+| `AUTH_SECRET` | Auth.js gizli anahtarı (`openssl rand -base64 32`) — **production zorunlu** |
+| `AUTH_URL` | Site kök URL (Vercel: `https://SITENIZ.vercel.app`) |
+| `ADMIN_DEMO_MODE` | `true` ise panel + giriş PostgreSQL olmadan demo verilerle çalışır |
 | `HOTELRUNNER_HR_ID` / `HOTELRUNNER_TOKEN` | HotelRunner API kimlik bilgileri |
 | `HOTELRUNNER_FORCE_MOCK` | `true` ise gerçek API yerine örnek veri kullanılır |
 | `HOTELRUNNER_WEBHOOK_SECRET` | Webhook doğrulama anahtarı |
@@ -51,7 +53,22 @@ Site: http://localhost:3000 · Yönetim paneli: http://localhost:3000/yonetim
 > moduna** geçer; tüm akışlar örnek veriyle çalışır. Veritabanı erişilemezse
 > sayfalar statik içeriğe güvenli şekilde düşer.
 
-## HotelRunner Entegrasyonu
+## Vercel'e Deploy
+
+Vercel proje ayarları → **Settings → Environment Variables** bölümüne şunları ekleyin:
+
+| Değişken | Değer |
+| --- | --- |
+| `AUTH_SECRET` | `openssl rand -base64 32` ile üretilmiş rastgele anahtar |
+| `AUTH_URL` | `https://rivesidehouse.vercel.app` (kendi domain'iniz) |
+| `ADMIN_DEMO_MODE` | `true` (PostgreSQL olmadan sunum için) |
+| `HOTELRUNNER_FORCE_MOCK` | `true` |
+
+`AUTH_SECRET` olmadan admin girişi **500** hatası verir. Değişkenleri ekledikten sonra **Redeploy** yapın.
+
+**Sunum girişi:** `admin@riversidetinyhouse.com` / `riverside123`
+
+---
 
 - **Çekme (HR → bizim sistem):** oda/fiyat listesi, rezervasyonlar, gerçek
   zamanlı webhook (`/api/webhooks/hotelrunner`)
