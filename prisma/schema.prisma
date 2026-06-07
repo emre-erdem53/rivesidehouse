@@ -1,0 +1,186 @@
+// Riverside Tiny House - Prisma şeması
+// PostgreSQL + Prisma. HotelRunner ile çift yönlü senkronizasyon için tasarlandı.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  STAFF
+}
+
+enum ReservationStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  CHECKED_IN
+  CHECKED_OUT
+}
+
+enum SyncDirection {
+  PULL // HotelRunner -> bizim sistem
+  PUSH // bizim sistem -> HotelRunner
+}
+
+enum SyncStatus {
+  SUCCESS
+  FAILED
+  PARTIAL
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String
+  passwordHash String
+  role         UserRole @default(STAFF)
+  title        String? // örn. "Genel Müdür"
+  avatarUrl    String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+// HotelRunner'daki oda tipi (inv_code) + yerel pazarlama içeriği
+model RoomType {
+  id          String  @id @default(cuid())
+  invCode     String  @unique // HotelRunner inv_code
+  name        String
+  slug        String  @unique
+  description String? @db.Text
+  shortDesc   String?
+
+  capacity   Int     @default(2)
+  sizeSqm    Int?
+  bedType    String?
+  basePrice  Decimal @default(0) @db.Decimal(10, 2)
+  currency   String  @default("TRY")
+  // Yerel pazarlama görselleri ve özellikleri
+  heroImage  String?
+  images     String[] @default([])
+  amenities  String[] @default([])
+  badge      String? // örn. "Signature", "Premium"
+  isActive   Boolean  @default(true)
+  sortOrder  Int      @default(0)
+
+  ratePlans     RatePlan[]
+  availability  AvailabilityCache[]
+  reservations  Reservation[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model RatePlan {
+  id         String   @id @default(cuid())
+  rateCode   String   @unique // HotelRunner rate_code
+  name       String
+  roomType   RoomType @relation(fields: [roomTypeId], references: [id], onDelete: Cascade)
+  roomTypeId String
+  isMaster   Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+// HotelRunner'dan çekilen müsaitlik/fiyat verisinin günlük önbelleği
+model AvailabilityCache {
+  id           String   @id @default(cuid())
+  roomType     RoomType @relation(fields: [roomTypeId], references: [id], onDelete: Cascade)
+  roomTypeId   String
+  date         DateTime @db.Date
+  availability Int      @default(0)
+  price        Decimal  @default(0) @db.Decimal(10, 2)
+  stopSale     Boolean  @default(false)
+  minStay      Int      @default(1)
+  syncedAt     DateTime @default(now())
+
+  @@unique([roomTypeId, date])
+  @@index([date])
+}
+
+model Guest {
+  id           String        @id @default(cuid())
+  firstName    String
+  lastName     String
+  email        String?
+  phone        String?
+  country      String?
+  reservations Reservation[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@index([email])
+}
+
+model Reservation {
+  id        String @id @default(cuid())
+  // HotelRunner rezervasyon kimliği (HR -> biz senkronu için)
+  hrCode    String? @unique
+  code      String  @unique // dahili okunabilir kod, örn. RES-0001
+
+  roomType   RoomType @relation(fields: [roomTypeId], references: [id])
+  roomTypeId String
+  guest      Guest    @relation(fields: [guestId], references: [id])
+  guestId    String
+
+  checkIn   DateTime @db.Date
+  checkOut  DateTime @db.Date
+  adults    Int      @default(2)
+  children  Int      @default(0)
+  nights    Int      @default(1)
+
+  status      ReservationStatus @default(PENDING)
+  channel     String            @default("direct") // direct, bookingcom, online, vb.
+  totalAmount Decimal           @default(0) @db.Decimal(10, 2)
+  currency    String            @default("TRY")
+  notes       String?           @db.Text
+
+  // Senkron durumu
+  pushedToHr Boolean   @default(false)
+  syncedAt   DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([checkIn, checkOut])
+  @@index([status])
+}
+
+model StaffMember {
+  id         String   @id @default(cuid())
+  fullName   String
+  role       String // örn. "Resepsiyon", "Kat Hizmetleri"
+  department String?
+  email      String?
+  phone      String?
+  avatarUrl  String?
+  shift      String? // örn. "Sabah", "Akşam"
+  isActive   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model SyncLog {
+  id        String        @id @default(cuid())
+  direction SyncDirection
+  entity    String // örn. "rooms", "reservations", "availability"
+  status    SyncStatus
+  message   String?       @db.Text
+  itemCount Int           @default(0)
+  createdAt DateTime      @default(now())
+
+  @@index([createdAt])
+}
+
+// Genel site içeriği için basit ayar/içerik tablosu (iletişim bilgileri vb.)
+model SiteSetting {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String   @db.Text
+  updatedAt DateTime @updatedAt
+}
