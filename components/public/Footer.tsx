@@ -6,7 +6,7 @@ import { LogoLink } from "@/components/ui/Logo";
 export function Footer() {
   return (
     <footer className="w-full bg-surface-container-highest border-t border-outline-variant/10">
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-lg px-gutter py-xl max-w-container-max mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-lg px-4 sm:px-gutter py-xl max-w-container-max mx-auto">
         <div className="md:col-span-1">
           <LogoLink size="footer" className="mb-md" />
           <p className="font-body-md text-body-md text-on-surface-variant">
@@ -59,15 +59,15 @@ export function Footer() {
           <p className="font-body-md text-body-md text-on-surface-variant mb-sm">
             Doğanın sesinden haberdar olun.
           </p>
-          <form className="flex gap-xs">
+          <form className="flex flex-col sm:flex-row gap-xs">
             <input
-              className="bg-surface-container-low border border-outline-variant/20 rounded-lg px-sm py-xs w-full text-body-md focus:outline-none focus:ring-1 focus:ring-primary"
+              className="bg-surface-container-low border border-outline-variant/20 rounded-lg px-sm py-sm w-full min-h-11 text-body-md focus:outline-none focus:ring-1 focus:ring-primary"
               placeholder="E-posta adresiniz"
               type="email"
             />
             <button
               type="submit"
-              className="bg-primary text-on-primary px-sm rounded-lg shrink-0"
+              className="bg-primary text-on-primary min-h-11 px-md rounded-lg shrink-0 flex items-center justify-center touch-manipulation"
               aria-label="Abone ol"
             >
               <Icon name="arrow_forward" />
@@ -76,7 +76,7 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="px-gutter py-md border-t border-outline-variant/10 text-center max-w-container-max mx-auto">
+      <div className="px-4 sm:px-gutter py-md border-t border-outline-variant/10 text-center max-w-container-max mx-auto">
         <p className="font-body-md text-body-md text-on-surface-variant/70">
           © {new Date().getFullYear()} {site.name}. Doğanın kalbinden ilhamla.
         </p>

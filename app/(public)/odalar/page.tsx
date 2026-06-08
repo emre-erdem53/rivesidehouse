@@ -19,7 +19,7 @@ export default async function RoomsPage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative pt-header pb-xl px-gutter text-center">
+      <section className="relative pt-header pb-xl px-4 sm:px-gutter text-center">
         <Reveal className="max-w-3xl mx-auto">
           <h1 className="font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-md">
             Odalar &amp; Tiny House&apos;lar
@@ -32,7 +32,7 @@ export default async function RoomsPage() {
       </section>
 
       {/* Liste — asimetrik düzen */}
-      <section className="max-w-container-max mx-auto px-gutter pb-xl flex flex-col gap-xl md:gap-[120px]">
+      <section className="max-w-container-max mx-auto px-4 sm:px-gutter pb-xl flex flex-col gap-xl md:gap-[120px]">
         {rooms.map((room, idx) => {
           const reverse = idx % 2 === 1;
           return (
@@ -79,8 +79,8 @@ export default async function RoomsPage() {
                     </div>
                   ))}
                 </div>
-                <div className="flex items-end justify-between border-t border-outline-variant/30 pt-md">
-                  <div>
+                <div className="flex flex-col sm:flex-row gap-sm sm:items-end sm:justify-between border-t border-outline-variant/30 pt-md">
+                  <div className="mb-sm sm:mb-0">
                     <p className="font-label-sm text-label-sm text-outline mb-xs">
                       Başlangıç fiyatı
                     </p>
@@ -92,16 +92,17 @@ export default async function RoomsPage() {
                       </span>
                     </p>
                   </div>
-                  <div className="flex gap-sm">
+                  <div className="flex flex-col sm:flex-row gap-sm w-full sm:w-auto">
                     <Link
                       href={`/odalar/${room.slug}`}
-                      className="px-md py-sm rounded-full border border-primary text-primary font-label-md hover:bg-primary hover:text-on-primary transition-all"
+                      className="inline-flex min-h-11 w-full sm:w-auto items-center justify-center px-md py-sm rounded-full border border-primary text-primary font-label-md hover:bg-primary hover:text-on-primary transition-all touch-manipulation"
                     >
                       İncele
                     </Link>
                     <ButtonLink
                       href={`/rezervasyon?room=${room.slug}`}
                       size="md"
+                      className="!w-full sm:!w-auto"
                     >
                       Rezervasyon
                     </ButtonLink>
@@ -114,7 +115,7 @@ export default async function RoomsPage() {
       </section>
 
       {/* Bilgi bandı */}
-      <Reveal className="max-w-4xl mx-auto px-gutter py-xl text-center">
+      <Reveal className="max-w-4xl mx-auto px-4 sm:px-gutter py-xl text-center">
         <Icon name="spa" className="text-4xl text-secondary mb-sm" />
         <h3 className="font-headline-sm text-headline-sm text-primary mb-sm">
           Konaklamanızı Zenginleştirin

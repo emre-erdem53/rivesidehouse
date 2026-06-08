@@ -17,7 +17,7 @@ export default async function HomePage() {
       <HomeHero heroImage={heroImage} />
 
       {/* Deneyimler */}
-      <section className="py-xl px-gutter max-w-container-max mx-auto">
+      <section className="py-lg sm:py-xl px-4 sm:px-gutter max-w-container-max mx-auto">
         <Reveal className="text-center mb-xl">
           <span className="font-label-sm text-label-sm text-secondary uppercase tracking-widest">
             Ritüellerimiz
@@ -50,8 +50,8 @@ export default async function HomePage() {
       </section>
 
       {/* Odalar */}
-      <section className="py-xl bg-surface-container-low">
-        <div className="max-w-container-max mx-auto px-gutter">
+      <section className="py-lg sm:py-xl bg-surface-container-low">
+        <div className="max-w-container-max mx-auto px-4 sm:px-gutter">
           <Reveal className="flex flex-col md:flex-row justify-between items-end mb-xl gap-md">
             <div className="max-w-xl">
               <span className="font-label-sm text-label-sm text-secondary uppercase tracking-widest">
@@ -79,21 +79,21 @@ export default async function HomePage() {
       </section>
 
       {/* Fog Overlay banner */}
-      <section className="relative h-[400px] flex items-center justify-center overflow-hidden wood-texture">
+      <section className="relative min-h-[320px] sm:min-h-[400px] flex items-center justify-center overflow-hidden wood-texture">
         <div className="absolute inset-0 bg-primary/40 backdrop-blur-sm" />
         <div className="absolute inset-0 opacity-30 fog-animation">
           <div className="w-[200%] h-full bg-gradient-to-r from-transparent via-white/40 to-transparent" />
         </div>
-        <Reveal className="relative z-10 text-center px-gutter text-on-primary">
+        <Reveal className="relative z-10 text-center px-4 sm:px-gutter text-on-primary">
           <h2 className="font-display-lg text-display-lg-mobile md:text-display-lg mb-sm">
             Zamanı Unutun
           </h2>
           <p className="font-body-lg text-body-lg max-w-xl mx-auto opacity-90">
             {site.name}&apos;ta her an, nehrin kıyısında yazılan yeni bir hikaye.
           </p>
-          <div className="mt-lg">
-            <ButtonLink href="/rezervasyon" variant="secondary" size="lg">
-              <Icon name="calendar_month" className="text-[20px]" />
+          <div className="mt-lg flex justify-center px-2">
+            <ButtonLink href="/rezervasyon" variant="secondary" size="lg" className="!w-full max-w-sm sm:!w-auto sm:max-w-none">
+              <Icon name="calendar_month" className="text-[20px] shrink-0" />
               Rezervasyon Yap
             </ButtonLink>
           </div>

@@ -18,7 +18,7 @@ export default function ExperiencePage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative pt-header pb-xl px-gutter text-center">
+      <section className="relative pt-header pb-xl px-4 sm:px-gutter text-center">
         <Reveal className="max-w-2xl mx-auto">
           <h1 className="font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-sm">
             Beslen &amp; Yenilen
@@ -32,7 +32,7 @@ export default function ExperiencePage() {
       </section>
 
       {/* Wellness bento */}
-      <section className="py-md px-gutter max-w-container-max mx-auto">
+      <section className="py-md px-4 sm:px-gutter max-w-container-max mx-auto">
         <Reveal className="mb-lg">
           <h2 className="font-headline-md text-headline-md text-primary mb-xs">
             Nehir Kenarı Wellness
@@ -92,7 +92,7 @@ export default function ExperiencePage() {
       </section>
 
       {/* Dining */}
-      <section className="py-xl px-gutter max-w-container-max mx-auto">
+      <section className="py-xl px-4 sm:px-gutter max-w-container-max mx-auto">
         <Reveal className="bg-surface-container-low rounded-[40px] p-lg md:p-xl ultra-soft-shadow flex flex-col md:flex-row items-center gap-xl">
           <div className="md:w-5/12">
             <div className="inline-block px-3 py-1 bg-secondary-container/40 text-on-secondary-container rounded-full font-label-sm text-label-sm mb-md">
@@ -123,7 +123,7 @@ export default function ExperiencePage() {
                 </li>
               ))}
             </ul>
-            <ButtonLink href="/iletisim" size="lg">
+            <ButtonLink href="/iletisim" size="lg" className="w-full sm:w-auto">
               Masa Ayırt
             </ButtonLink>
           </div>

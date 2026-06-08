@@ -17,7 +17,7 @@ export default function ReservationPage({
   };
 }) {
   return (
-    <section className="pt-header pb-xl px-gutter max-w-container-max mx-auto">
+    <section className="pt-header pb-xl px-4 sm:px-gutter max-w-container-max mx-auto">
       <header className="text-center mb-xl">
         <h1 className="font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-sm">
           Rezervasyon

@@ -15,10 +15,13 @@ const variants: Record<Variant, string> = {
 };
 
 const sizes: Record<Size, string> = {
-  sm: "px-md py-base text-label-sm",
-  md: "px-md py-sm text-label-md",
-  lg: "px-xl py-md text-label-md",
+  sm: "min-h-10 px-sm py-xs text-label-sm sm:min-h-11 sm:px-md sm:py-base",
+  md: "min-h-11 px-md py-sm text-label-md sm:min-h-12 sm:px-lg",
+  lg: "min-h-12 w-full px-lg py-sm text-label-md sm:w-auto sm:min-h-12 sm:px-xl sm:py-md",
 };
+
+const baseClass =
+  "inline-flex max-w-full items-center justify-center gap-2 rounded-full font-label-md text-center transition-all duration-300 touch-manipulation whitespace-normal leading-snug sm:whitespace-nowrap";
 
 type BaseProps = {
   variant?: Variant;
@@ -37,7 +40,8 @@ export function Button({
   return (
     <button
       className={clsx(
-        "inline-flex items-center justify-center gap-2 rounded-full font-label-md transition-all duration-300 disabled:opacity-50 disabled:pointer-events-none",
+        baseClass,
+        "disabled:pointer-events-none disabled:opacity-50",
         variants[variant],
         sizes[size],
         className
@@ -55,12 +59,14 @@ export function ButtonLink({
   className,
   href,
   children,
-}: BaseProps & { href: string }) {
+  onClick,
+}: BaseProps & { href: string; onClick?: () => void }) {
   return (
     <Link
       href={href}
+      onClick={onClick}
       className={clsx(
-        "inline-flex items-center justify-center gap-2 rounded-full font-label-md transition-all duration-300",
+        baseClass,
         variants[variant],
         sizes[size],
         className

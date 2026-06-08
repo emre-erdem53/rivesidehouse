@@ -4,19 +4,25 @@
 
 @layer base {
   :root {
-    /* Navbar: logo (h-28/32/36) + dikey padding (py-sm/py-md) + güvenli boşluk */
-    --header-height: 160px;
+    /* Navbar: logo + padding + güvenli boşluk */
+    --header-height: 112px;
   }
 
   @media (min-width: 640px) {
     :root {
-      --header-height: 176px;
+      --header-height: 128px;
     }
   }
 
   @media (min-width: 768px) {
     :root {
-      --header-height: 216px;
+      --header-height: 144px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    :root {
+      --header-height: 160px;
     }
   }
 

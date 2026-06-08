@@ -191,7 +191,7 @@ export function BookingFlow({
             </select>
           </label>
           <div className="md:col-span-3">
-            <Button type="submit" size="lg" disabled={loading}>
+            <Button type="submit" size="lg" disabled={loading} className="w-full">
               <Icon name="search" className="text-[20px]" />
               {loading ? "Sorgulanıyor..." : "Uygunluk Sorgula"}
             </Button>
@@ -219,8 +219,8 @@ export function BookingFlow({
                 alt={room.name}
                 className="w-full sm:w-48 h-40 object-cover"
               />
-              <div className="p-md flex-1 flex flex-col sm:flex-row sm:items-center justify-between gap-md">
-                <div>
+              <div className="p-md flex-1 flex flex-col gap-md sm:flex-row sm:items-center sm:justify-between">
+                <div className="min-w-0">
                   <h3 className="font-headline-sm text-headline-sm text-primary">
                     {room.name}
                   </h3>
@@ -237,16 +237,19 @@ export function BookingFlow({
                     </p>
                   )}
                 </div>
-                <div className="text-right">
-                  <p className="font-headline-sm text-headline-sm text-primary">
-                    {formatCurrency(room.totalPrice)}
-                  </p>
-                  <p className="font-label-sm text-label-sm text-on-surface-variant mb-sm">
-                    {formatCurrency(room.pricePerNight)}/gece
-                  </p>
+                <div className="flex flex-col sm:items-end gap-sm w-full sm:w-auto shrink-0">
+                  <div className="text-left sm:text-right">
+                    <p className="font-headline-sm text-headline-sm text-primary">
+                      {formatCurrency(room.totalPrice)}
+                    </p>
+                    <p className="font-label-sm text-label-sm text-on-surface-variant">
+                      {formatCurrency(room.pricePerNight)}/gece
+                    </p>
+                  </div>
                   <Button
                     size="md"
                     disabled={!room.available}
+                    className="w-full sm:!w-auto"
                     onClick={() => {
                       setSelected(room);
                       setStep("guest");
@@ -277,16 +280,16 @@ export function BookingFlow({
 
           {/* Özet */}
           <div className="glass-card rounded-lg p-md mb-lg border border-outline-variant/10">
-            <div className="flex justify-between items-center">
-              <div>
+            <div className="flex flex-col gap-sm sm:flex-row sm:justify-between sm:items-center">
+              <div className="min-w-0">
                 <p className="font-headline-sm text-headline-sm text-primary">
                   {selected.name}
                 </p>
-                <p className="font-body-md text-body-md text-on-surface-variant">
+                <p className="font-body-md text-body-md text-on-surface-variant break-words">
                   {checkIn} → {checkOut} · {selected.nights} gece · {guests} misafir
                 </p>
               </div>
-              <p className="font-headline-sm text-headline-sm text-primary">
+              <p className="font-headline-sm text-headline-sm text-primary shrink-0">
                 {formatCurrency(selected.totalPrice)}
               </p>
             </div>
@@ -315,13 +318,15 @@ export function BookingFlow({
             </label>
           </div>
 
-          <div className="mt-lg flex items-center justify-between">
-            <p className="font-label-sm text-label-sm text-on-surface-variant">
+          <div className="mt-lg flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between gap-md">
+            <p className="font-label-sm text-label-sm text-on-surface-variant text-center sm:text-left">
               Ödeme güvenli şekilde alınır.
             </p>
-            <Button type="submit" size="lg" disabled={submitting}>
-              <Icon name="lock" className="text-[20px]" />
-              {submitting ? "İşleniyor..." : `Öde ve Onayla · ${formatCurrency(selected.totalPrice)}`}
+            <Button type="submit" size="lg" disabled={submitting} className="w-full sm:!w-auto shrink-0">
+              <Icon name="lock" className="text-[20px] shrink-0" />
+              <span className="truncate">
+                {submitting ? "İşleniyor..." : `Öde ve Onayla · ${formatCurrency(selected.totalPrice)}`}
+              </span>
             </Button>
           </div>
         </form>
@@ -370,25 +375,25 @@ function Stepper({ step }: { step: Step }) {
   const currentIdx = order.indexOf(step);
 
   return (
-    <div className="flex items-center justify-center gap-xs mb-lg">
+    <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-xs mb-lg px-1">
       {steps.map((s, i) => {
         const active = i <= currentIdx;
         return (
-          <div key={s.key} className="flex items-center gap-xs">
+          <div key={s.key} className="flex items-center gap-1 sm:gap-xs">
             <div
-              className={`flex items-center gap-xs px-sm py-xs rounded-full font-label-sm text-label-sm ${
+              className={`flex items-center gap-1 sm:gap-xs px-2 sm:px-sm py-1 sm:py-xs rounded-full font-label-sm text-label-sm whitespace-nowrap ${
                 active
                   ? "bg-primary text-on-primary"
                   : "bg-surface-container text-on-surface-variant"
               }`}
             >
-              <span className="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center text-xs">
+              <span className="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center text-xs shrink-0">
                 {i + 1}
               </span>
-              {s.label}
+              <span>{s.label}</span>
             </div>
             {i < steps.length - 1 && (
-              <span className="w-6 h-px bg-outline-variant" />
+              <span className="hidden sm:block w-4 lg:w-6 h-px bg-outline-variant shrink-0" />
             )}
           </div>
         );

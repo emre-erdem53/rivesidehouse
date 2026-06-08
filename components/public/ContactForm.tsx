@@ -70,7 +70,7 @@ export function ContactForm() {
         <textarea id="message" name="message" rows={5} required className={`${inputClass} resize-none`} placeholder="Konaklamanızı planlamanıza nasıl yardımcı olabiliriz?" />
       </div>
 
-      <Button type="submit" size="lg" disabled={status === "sending"} className="self-start">
+      <Button type="submit" size="lg" disabled={status === "sending"} className="w-full sm:w-auto sm:self-start">
         {status === "sending" ? "Gönderiliyor..." : "Talebi Gönder"}
       </Button>
 

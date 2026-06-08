@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <main className="pt-header pb-xl px-gutter max-w-container-max mx-auto w-full">
+    <main className="pt-header pb-xl px-4 sm:px-gutter max-w-container-max mx-auto w-full">
       <Reveal className="mb-xl text-center md:text-left md:w-2/3">
         <h1 className="font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-md">
           Bizimle İletişime Geçin

@@ -22,11 +22,11 @@ export function RoomCard({ room }: { room: RoomCardData }) {
         />
       </div>
       <div className="p-md">
-        <div className="flex justify-between items-center mb-xs">
+        <div className="flex flex-col gap-xs sm:flex-row sm:justify-between sm:items-start mb-xs">
           <h4 className="font-headline-sm text-headline-sm text-primary">
             {room.name}
           </h4>
-          <span className="font-label-md text-primary">
+          <span className="font-label-md text-primary shrink-0">
             {formatCurrency(room.basePrice)}
             <span className="text-on-surface-variant font-normal"> /gece</span>
           </span>
@@ -41,7 +41,7 @@ export function RoomCard({ room }: { room: RoomCardData }) {
         </div>
         <Link
           href={`/odalar/${room.slug}`}
-          className="block w-full text-center border border-primary text-primary py-sm rounded-lg font-label-md hover:bg-primary hover:text-on-primary transition-all"
+          className="block w-full min-h-11 text-center border border-primary text-primary py-sm px-md rounded-lg font-label-md hover:bg-primary hover:text-on-primary transition-all touch-manipulation"
         >
           İncele
         </Link>

@@ -6,14 +6,15 @@ const LOGO_RATIO = 505 / 494;
 
 const LOGO_SIZES = {
   header: {
-    width: 200,
-    height: Math.round(200 / LOGO_RATIO),
-    className: "h-28 w-auto sm:h-32 md:h-36",
+    width: 160,
+    height: Math.round(160 / LOGO_RATIO),
+    className:
+      "h-[68px] w-auto max-w-[min(148px,46vw)] sm:h-20 sm:max-w-none md:h-24 lg:h-28",
   },
   footer: {
-    width: 260,
-    height: Math.round(260 / LOGO_RATIO),
-    className: "h-40 w-auto md:h-48",
+    width: 220,
+    height: Math.round(220 / LOGO_RATIO),
+    className: "h-32 w-auto max-w-[220px] sm:h-36 md:h-40",
   },
 } as const;
 

@@ -41,7 +41,7 @@ export default async function RoomDetailPage({
           className="w-full h-full object-cover animate-kenburns"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
-        <div className="absolute bottom-0 left-0 right-0 px-gutter pb-xl">
+        <div className="absolute bottom-0 left-0 right-0 px-4 sm:px-gutter pb-xl">
           <Reveal className="max-w-container-max mx-auto" direction="up">
             <span className="font-label-md text-label-md text-secondary uppercase tracking-widest">
               {room.badge}
@@ -53,7 +53,7 @@ export default async function RoomDetailPage({
         </div>
       </section>
 
-      <section className="max-w-container-max mx-auto px-gutter py-xl grid grid-cols-1 lg:grid-cols-3 gap-xl">
+      <section className="max-w-container-max mx-auto px-4 sm:px-gutter py-xl grid grid-cols-1 lg:grid-cols-3 gap-xl">
         <Reveal className="lg:col-span-2" direction="up">
           <p className="font-body-lg text-body-lg text-on-surface-variant leading-relaxed mb-lg">
             {room.description}
@@ -79,7 +79,7 @@ export default async function RoomDetailPage({
 
         {/* Rezervasyon kartı */}
         <Reveal className="lg:col-span-1" direction="right">
-          <div className="glass-card border border-outline-variant/20 rounded-xl p-lg sticky top-header">
+          <div className="glass-card border border-outline-variant/20 rounded-xl p-lg lg:sticky lg:top-header">
             <p className="font-label-sm text-label-sm text-outline mb-xs">
               Başlangıç fiyatı
             </p>
@@ -107,7 +107,7 @@ export default async function RoomDetailPage({
             <ButtonLink
               href={`/rezervasyon?room=${room.slug}`}
               size="lg"
-              className="w-full"
+              className="w-full !max-w-none"
             >
               <Icon name="calendar_month" className="text-[20px]" />
               Rezervasyon Yap
